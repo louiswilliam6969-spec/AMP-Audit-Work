@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <style>
-        /* Restored High-End Modern Font */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
         
@@ -26,10 +25,7 @@
         }
         .pulse-overdue { animation: pulse-red 2s infinite; background-color: #ef4444 !important; color: white !important; }
 
-        /* Blur for Missing Links */
         .disabled-resource { opacity: 0.3; filter: blur(1.5px); pointer-events: none; cursor: not-allowed; }
-        
-        /* Forced Hidden Class */
         .hidden-view { display: none !important; }
     </style>
 </head>
@@ -41,28 +37,28 @@
                 <div class="bg-blue-600 p-2 rounded-xl text-white shadow-lg shadow-blue-200"><i class="fas fa-shield-halved text-xl"></i></div>
                 <h1 class="text-xl font-bold tracking-tight uppercase">AMP <span class="text-blue-600">Audits</span></h1>
             </div>
-            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">v8.5 Platinum Stable</p>
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">v9.0 Final Platinum</p>
         </div>
     </nav>
 
     <main class="max-w-7xl mx-auto p-6 lg:p-10">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
             <div class="md:col-span-3">
-                <h2 class="text-3xl font-bold mb-2">Audit Dashboard</h2>
-                <p class="text-slate-500 italic">Monitoring real-time firm engagements and compliance deadlines.</p>
+                <h2 class="text-3xl font-bold mb-2 text-slate-800">Audit Dashboard</h2>
+                <p class="text-slate-500 italic">Monitoring firm engagements for Punit Khandelwal and Apoorv Mathur.</p>
             </div>
             
             <button onclick="toggleListView()" class="group relative overflow-hidden bg-blue-600 text-white p-6 rounded-3xl shadow-xl transition-all active:scale-95 text-left">
                 <p class="text-[10px] uppercase font-bold text-blue-200">Active Engagements</p>
                 <div class="flex justify-between items-center">
                     <p id="totalCount" class="text-4xl font-bold">0</p>
-                    <i class="fas fa-list-check opacity-30 text-4xl"></i>
+                    <i class="fas fa-tasks opacity-30 text-4xl"></i>
                 </div>
-                <p class="text-[9px] mt-2 text-white/70 font-bold uppercase tracking-tighter">Click to view full list</p>
+                <p class="text-[9px] mt-2 text-white/70 font-bold uppercase tracking-widest">Click to view full list</p>
             </button>
         </div>
 
-        <div id="listViewPanel" class="hidden-view mb-12 bg-white rounded-[2rem] border border-slate-200 overflow-hidden shadow-2xl animate-in slide-in-from-top duration-500">
+        <div id="listViewPanel" class="hidden-view mb-12 bg-white rounded-[2rem] border border-slate-200 overflow-hidden shadow-2xl">
             <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
                 <h3 class="font-bold flex items-center gap-2 text-slate-800"><i class="fas fa-table-list text-blue-600"></i> Full Engagement List</h3>
                 <button onclick="toggleListView()" class="h-10 w-10 rounded-full hover:bg-slate-200 transition text-2xl flex items-center justify-center">&times;</button>
@@ -72,13 +68,12 @@
                     <thead class="text-[11px] uppercase font-bold text-slate-400 bg-slate-50/50">
                         <tr>
                             <th class="px-10 py-5">Client</th>
-                            <th class="px-10 py-5 text-center">Partner</th>
-                            <th class="px-10 py-5 text-center">Duration</th>
-                            <th class="px-10 py-5 text-center">Status</th>
+                            <th class="px-10 py-5">Partner</th>
+                            <th class="px-10 py-5">Duration</th>
+                            <th class="px-10 py-5">Status</th>
                         </tr>
                     </thead>
-                    <tbody id="listTableBody" class="divide-y divide-slate-100 italic text-sm text-slate-700">
-                        </tbody>
+                    <tbody id="listTableBody" class="divide-y divide-slate-100 italic text-sm text-slate-700"></tbody>
                 </table>
             </div>
         </div>
@@ -86,8 +81,8 @@
         <div class="flex flex-col md:flex-row gap-6 mb-8 items-center justify-between">
             <div class="relative w-full md:w-96">
                 <i class="fas fa-search absolute left-4 top-4 text-slate-400"></i>
-                <input type="text" id="auditSearch" onkeyup="render()" placeholder="Filter engagements..." 
-                    class="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none transition">
+                <input type="text" id="auditSearch" onkeyup="render()" placeholder="Filter audits..." 
+                    class="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm">
             </div>
             <div class="bg-slate-200/50 p-1.5 rounded-2xl flex gap-1">
                 <button onclick="setTab('ALL')" id="tabALL" class="px-6 py-2 rounded-xl text-xs font-bold transition bg-white shadow-sm">All</button>
@@ -120,24 +115,24 @@
                         <div id="modalDesc" class="text-slate-600 leading-relaxed italic text-sm whitespace-pre-line">--</div>
                     </section>
                     <section>
-                        <h4 class="text-[10px] uppercase font-bold text-slate-400 mb-3 tracking-widest">Assigned Team</h4>
+                        <h4 class="text-[10px] uppercase font-bold text-slate-400 mb-3 tracking-widest">Team</h4>
                         <div id="modalTeam" class="flex -space-x-3"></div>
                     </section>
                 </div>
                 <div class="md:col-span-2">
                     <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100">
-                        <h4 class="text-xs font-bold mb-6 flex items-center gap-2 uppercase tracking-tight text-slate-800"><i class="fas fa-folder-tree text-blue-600"></i> Firm Resources</h4>
+                        <h4 class="text-xs font-bold mb-6 flex items-center gap-2 uppercase tracking-tight text-slate-800">Firm Resources</h4>
                         <div class="space-y-4">
-                            <a id="modalFolder" href="#" target="_blank" class="flex items-center justify-between p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-500 transition group shadow-sm">
+                            <a id="modalFolder" href="#" target="_blank" class="flex items-center justify-between p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-500 transition shadow-sm group">
                                 <span class="flex items-center gap-3"><i class="fas fa-folder text-amber-500"></i><span class="font-bold text-xs text-slate-700">Workpapers</span></span>
                                 <i class="fas fa-external-link-alt text-[10px] text-slate-300"></i>
                             </a>
-                            <a id="modalChecklist" href="#" target="_blank" class="flex items-center justify-between p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 transition group shadow-sm">
+                            <a id="modalChecklist" href="#" target="_blank" class="flex items-center justify-between p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 transition shadow-sm group">
                                 <span class="flex items-center gap-3"><i class="fas fa-tasks text-blue-400"></i><span class="font-bold text-xs text-slate-700">QC Checklist</span></span>
                                 <i class="fas fa-external-link-alt text-[10px] text-slate-300"></i>
                             </a>
-                            <a id="modalReport" href="#" target="_blank" class="flex items-center justify-between p-4 bg-white rounded-2xl border border-slate-200 hover:border-green-500 transition group shadow-sm">
-                                <span class="flex items-center gap-3"><i class="fas fa-file-invoice text-green-500"></i><span class="font-bold text-xs text-slate-700">Final Audit Report</span></span>
+                            <a id="modalReport" href="#" target="_blank" class="flex items-center justify-between p-4 bg-white rounded-2xl border border-slate-200 hover:border-green-500 transition shadow-sm group text-slate-700">
+                                <span class="flex items-center gap-3"><i class="fas fa-file-invoice text-green-500"></i><span class="font-bold text-xs text-slate-700">Final Report</span></span>
                                 <i class="fas fa-external-link-alt text-[10px] text-slate-300"></i>
                             </a>
                         </div>
@@ -148,19 +143,20 @@
     </div>
 
     <script>
-        const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRGzHkHY-7FP7s1cAC0BLRo3EENu8nHvUZxGbkBVeBAcaYlZGDWj_B8fjswfe6y3kcdBgo3h8IoeenL/pub?output=csv'; // Replace with CSV link
+        const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRGzHkHY-7FP7s1cAC0BLRo3EENu8nHvUZxGbkBVeBAcaYlZGDWj_B8fjswfe6y3kcdBgo3h8IoeenL/pub?output=csv'; // MUST end in &output=csv
         let audits = []; let currentTab = 'ALL';
 
         function loadData() {
-            Papa.parse(sheetUrl, { download: true, header: true, skipEmptyLines: true, complete: function(results) { audits = results.data; render(); } });
+            Papa.parse(sheetUrl, { 
+                download: true, header: true, skipEmptyLines: true,
+                complete: function(results) { 
+                    audits = results.data; 
+                    render(); 
+                } 
+            });
         }
 
-        // REINFORCED TOGGLE LOGIC
-        function toggleListView() {
-            const panel = document.getElementById('listViewPanel');
-            panel.classList.toggle('hidden-view');
-        }
-
+        function toggleListView() { document.getElementById('listViewPanel').classList.toggle('hidden-view'); }
         function closeModal() { document.getElementById('projectModal').classList.add('hidden-view'); }
 
         function getDaysRemaining(deadline) {
@@ -174,33 +170,35 @@
             const container = document.getElementById('auditContainer');
             const tableBody = document.getElementById('listTableBody');
             const search = document.getElementById('auditSearch').value.toLowerCase();
+            
+            // FILTER LOGIC
             const filtered = audits.filter(a => (currentTab === 'ALL' || a.Status === currentTab) && (a.Name?.toLowerCase().includes(search) || a.Partner?.toLowerCase().includes(search)));
             
-            // ACTIVE ENGAGEMENTS COUNT
-            const activeCount = audits.filter(a => a.Status === 'Pending' || a.Status === 'Ongoing').length;
-            document.getElementById('totalCount').innerText = activeCount;
+            // CALCULATE ACTIVE AUDITS (Ongoing + Pending)
+            const activeAudits = audits.filter(a => a.Status === 'Pending' || a.Status === 'Ongoing');
+            document.getElementById('totalCount').innerText = activeAudits.length;
             
-            // RENDER LIST TABLE (Exactly like your previous working version)
+            // RENDER TRACKER TABLE
             tableBody.innerHTML = filtered.map(a => `
                 <tr class="hover:bg-slate-50 transition border-b border-slate-100 text-slate-700">
                     <td class="px-10 py-6 font-bold uppercase tracking-tight">${a.Name || 'N/A'}</td>
-                    <td class="px-10 py-6 text-center text-slate-500 text-xs">${a.Partner || 'N/A'}</td>
-                    <td class="px-10 py-6 text-center text-[10px] text-slate-400 uppercase tracking-tighter">${a.Date || 'N/A'}</td>
-                    <td class="px-10 py-6 text-center">
+                    <td class="px-10 py-6 text-slate-500 text-xs">${a.Partner || 'N/A'}</td>
+                    <td class="px-10 py-6 text-[10px] text-slate-400 uppercase tracking-tighter">${a.Date || 'N/A'}</td>
+                    <td class="px-10 py-6">
                         <span class="text-[10px] font-bold px-3 py-1.5 rounded-full ${a.Status === 'Completed' ? 'bg-green-100 text-green-700' : (a.Status === 'Ongoing' ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700')} uppercase tracking-widest">${a.Status || 'Pending'}</span>
                     </td>
                 </tr>`).join('');
 
-            // RENDER MAIN CARDS
+            // RENDER CARDS
             container.innerHTML = filtered.map(a => {
                 const days = getDaysRemaining(a.Deadline);
                 const isOverdue = a.Status !== 'Completed' && days !== null && days < 0;
-                const overdueBadge = isOverdue ? `<span class="pulse-overdue px-2 py-0.5 rounded-lg text-[9px] font-bold uppercase ml-2 tracking-widest">OVERDUE</span>` : '';
+                const overdueBadge = isOverdue ? `<span class="pulse-overdue px-2 py-0.5 rounded-lg text-[9px] font-bold uppercase ml-2 tracking-widest shadow-sm">OVERDUE</span>` : '';
                 const colorClass = a.Status === 'Completed' ? 'bg-green-500' : (a.Status === 'Ongoing' ? 'bg-blue-500' : 'bg-amber-500');
                 const badgeColor = a.Status === 'Completed' ? 'bg-green-100 text-green-700' : (a.Status === 'Ongoing' ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700');
                 
                 return `
-                <div onclick="openModal('${(a.Name || "").replace(/'/g, "\\'")}')" class="modern-card p-10 cursor-pointer group shadow-sm">
+                <div onclick="openModal('${(a.Name || "").replace(/'/g, "\\'")}')" class="modern-card p-10 cursor-pointer group shadow-sm border border-slate-200">
                     <div class="sidebar-accent ${colorClass}"></div>
                     <div class="flex justify-between items-start">
                         <div class="flex-1">
@@ -235,8 +233,8 @@
             document.getElementById('modalDesc').innerText = a.Description || "Firm documentation.";
             document.getElementById('modalStatusBadge').innerText = a.Status;
 
-            // DYNAMIC BLUR LOGIC
-            const setupLink = (id, url) => {
+            // BLUR LOGIC
+            const applyLink = (id, url) => {
                 const el = document.getElementById(id);
                 if (url && url.trim() !== "" && url !== "#") {
                     el.href = url.trim();
@@ -248,9 +246,9 @@
                 }
             };
 
-            setupLink('modalFolder', a.Folder);
-            setupLink('modalReport', a.Report);
-            setupLink('modalChecklist', a.Checklist);
+            applyLink('modalFolder', a.Folder);
+            applyLink('modalReport', a.Report);
+            applyLink('modalChecklist', a.Checklist);
 
             const team = a.Team ? a.Team.split(',') : [];
             document.getElementById('modalTeam').innerHTML = team.map(n => `
