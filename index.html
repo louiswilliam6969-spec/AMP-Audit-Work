@@ -24,9 +24,9 @@
                 <div class="bg-blue-600 p-2 rounded-xl text-white"><i class="fas fa-shield-halved text-xl"></i></div>
                 <h1 class="text-xl font-bold tracking-tight text-slate-900 uppercase">AMP <span class="text-blue-600">Audits</span></h1>
             </div>
-            <div class="text-right hidden sm:block">
-                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Partner Dashboard</p>
-                <p class="text-xs font-semibold text-slate-600">v6.0 Stable</p>
+            <div class="text-right">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Portal Version</p>
+                <p class="text-xs font-semibold text-slate-600">v6.1 Final</p>
             </div>
         </div>
     </nav>
@@ -34,8 +34,8 @@
     <main class="max-w-7xl mx-auto p-6 lg:p-10">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
             <div class="md:col-span-3">
-                <h2 class="text-3xl font-bold mb-2">Audit Tracker</h2>
-                <p class="text-slate-500">Monitoring real-time firm engagements and compliance deadlines.</p>
+                <h2 class="text-3xl font-bold mb-2">Audit Dashboard</h2>
+                <p class="text-slate-500 italic">Tracking firm engagements for Punit Khandelwal and Apoorv Mathur.</p>
             </div>
             <button onclick="toggleListView()" class="group relative overflow-hidden bg-blue-600 text-white p-6 rounded-3xl shadow-xl transition-all active:scale-95 text-left">
                 <p class="text-[10px] uppercase font-bold text-blue-200">Active Engagements</p>
@@ -43,12 +43,12 @@
                     <p id="totalCount" class="text-4xl font-bold">0</p>
                     <i class="fas fa-list-check opacity-30 text-4xl"></i>
                 </div>
-                <p class="text-[9px] mt-2 text-white/70 font-bold uppercase tracking-tighter">Click to expand tracker</p>
+                <p class="text-[9px] mt-2 text-white font-bold uppercase tracking-tighter">Click to view tracker</p>
             </button>
         </div>
 
-        <div id="listViewPanel" class="hidden mb-12 bg-white rounded-[2rem] border border-slate-200 overflow-hidden shadow-xl">
-            <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+        <div id="listViewPanel" class="hidden mb-12 bg-white rounded-[2rem] border border-slate-200 overflow-hidden shadow-xl animate-in slide-in-from-top duration-300">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50 text-slate-900">
                 <h3 class="font-bold flex items-center gap-2"><i class="fas fa-table text-blue-600"></i> Full Engagement List</h3>
                 <button onclick="toggleListView()" class="h-8 w-8 rounded-full hover:bg-slate-200 transition text-2xl">&times;</button>
             </div>
@@ -78,7 +78,7 @@
     </main>
 
     <div id="projectModal" class="fixed inset-0 modal-blur z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-4xl rounded-[2.5rem] shadow-2xl overflow-hidden">
+        <div class="bg-white w-full max-w-4xl rounded-[2.5rem] shadow-2xl overflow-hidden animate-in zoom-in duration-300">
             <div class="bg-slate-900 p-10 text-white relative">
                 <button onclick="closeModal()" class="absolute top-8 right-8 text-slate-500 hover:text-white text-2xl">&times;</button>
                 <div class="flex items-center gap-4 mb-4">
@@ -87,7 +87,7 @@
                 </div>
                 <h2 id="modalTitle" class="text-3xl font-bold uppercase tracking-tight">--</h2>
                 <div class="mt-4 flex items-center gap-2 text-slate-400 text-sm">
-                    <i class="far fa-user-circle"></i> Lead Partner: <span id="modalPartner" class="text-white font-bold">--</span>
+                    <i class="far fa-user-circle"></i> Partner: <span id="modalPartner" class="text-white font-bold">--</span>
                 </div>
             </div>
             <div class="p-10 grid grid-cols-1 md:grid-cols-5 gap-10">
@@ -97,25 +97,25 @@
                         <div id="modalDesc" class="text-slate-600 leading-relaxed italic text-sm whitespace-pre-line">--</div>
                     </div>
                     <div>
-                        <h4 class="text-[10px] uppercase font-bold text-slate-400 mb-3 tracking-widest">Assigned Team</h4>
+                        <h4 class="text-[10px] uppercase font-bold text-slate-400 mb-3 tracking-widest">Engagement Team</h4>
                         <div id="modalTeam" class="flex -space-x-3"></div>
                     </div>
                 </div>
                 <div class="md:col-span-2">
                     <div class="bg-slate-50 p-6 rounded-3xl border border-slate-100">
-                        <h4 class="text-xs font-bold mb-4 flex items-center gap-2 text-slate-800 uppercase">Engagement Assets</h4>
-                        <div class="space-y-3">
-                            <a id="modalFolder" href="#" target="_blank" class="flex items-center justify-between p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-500 transition group">
-                                <span class="flex items-center gap-3"><i class="fas fa-folder text-amber-500"></i><span class="font-bold text-[11px]">Workpapers</span></span>
-                                <i class="fas fa-external-link-alt text-[10px] opacity-20 group-hover:opacity-100"></i>
+                        <h4 class="text-xs font-bold mb-6 text-slate-800 uppercase flex items-center gap-2"><i class="fas fa-folder-tree text-blue-600"></i> Engagement Assets</h4>
+                        <div class="space-y-4">
+                            <a id="modalFolder" href="#" target="_blank" class="flex items-center justify-between p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-500 hover:shadow-lg transition group">
+                                <span class="flex items-center gap-3"><i class="fas fa-folder text-amber-500"></i><span class="font-bold text-[11px] text-slate-700">Workpapers</span></span>
+                                <i class="fas fa-external-link-alt text-[10px] text-slate-300 group-hover:text-blue-500"></i>
                             </a>
-                            <a id="modalChecklist" href="#" target="_blank" class="flex items-center justify-between p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 transition group">
-                                <span class="flex items-center gap-3"><i class="fas fa-tasks text-blue-400"></i><span class="font-bold text-[11px]">QC Checklist</span></span>
-                                <i class="fas fa-external-link-alt text-[10px] opacity-20 group-hover:opacity-100"></i>
+                            <a id="modalChecklist" href="#" target="_blank" class="flex items-center justify-between p-4 bg-white rounded-2xl border border-slate-200 hover:border-blue-400 hover:shadow-lg transition group">
+                                <span class="flex items-center gap-3"><i class="fas fa-tasks text-blue-400"></i><span class="font-bold text-[11px] text-slate-700">QC Checklist</span></span>
+                                <i class="fas fa-external-link-alt text-[10px] text-slate-300 group-hover:text-blue-400"></i>
                             </a>
-                            <a id="modalReport" href="#" target="_blank" class="flex items-center justify-between p-4 bg-white rounded-2xl border border-slate-200 hover:border-green-500 transition group">
-                                <span class="flex items-center gap-3"><i class="fas fa-file-invoice text-green-500"></i><span class="font-bold text-[11px]">Final Report</span></span>
-                                <i class="fas fa-external-link-alt text-[10px] opacity-20 group-hover:opacity-100"></i>
+                            <a id="modalReport" href="#" target="_blank" class="flex items-center justify-between p-4 bg-white rounded-2xl border border-slate-200 hover:border-green-500 hover:shadow-lg transition group">
+                                <span class="flex items-center gap-3"><i class="fas fa-file-invoice text-green-500"></i><span class="font-bold text-[11px] text-slate-700">Final Report</span></span>
+                                <i class="fas fa-external-link-alt text-[10px] text-slate-300 group-hover:text-green-500"></i>
                             </a>
                         </div>
                     </div>
@@ -125,15 +125,12 @@
     </div>
 
     <script>
-        // Update with your actual published CSV link
-        const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRGzHkHY-7FP7s1cAC0BLRo3EENu8nHvUZxGbkBVeBAcaYlZGDWj_B8fjswfe6y3kcdBgo3h8IoeenL/pub?output=csv'; 
+        const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRGzHkHY-7FP7s1cAC0BLRo3EENu8nHvUZxGbkBVeBAcaYlZGDWj_B8fjswfe6y3kcdBgo3h8IoeenL/pub?output=csv'; // Replace with CSV link
         let audits = []; let currentTab = 'ALL';
 
         function loadData() {
             Papa.parse(sheetUrl, { 
-                download: true, 
-                header: true, 
-                skipEmptyLines: true, 
+                download: true, header: true, skipEmptyLines: true,
                 complete: function(results) { 
                     audits = results.data; 
                     render(); 
@@ -142,6 +139,7 @@
         }
 
         function toggleListView() { document.getElementById('listViewPanel').classList.toggle('hidden'); }
+        function closeModal() { document.getElementById('projectModal').classList.add('hidden'); }
 
         function getDaysRemaining(deadline) {
             if (!deadline) return null;
@@ -159,9 +157,9 @@
             document.getElementById('totalCount').innerText = filtered.length;
             
             tableBody.innerHTML = filtered.map(a => `
-                <tr class="hover:bg-slate-50 transition border-b border-slate-50">
-                    <td class="px-8 py-5 font-bold text-slate-700">${a.Name || 'N/A'}</td>
-                    <td class="px-8 py-5 text-slate-500 text-xs">${a.Partner || 'N/A'}</td>
+                <tr class="hover:bg-slate-50 transition border-b border-slate-50 text-slate-700">
+                    <td class="px-8 py-5 font-bold">${a.Name || 'N/A'}</td>
+                    <td class="px-8 py-5 text-xs text-slate-500">${a.Partner || 'N/A'}</td>
                     <td class="px-8 py-5 text-[10px] text-slate-400 uppercase">${a.Date || 'N/A'}</td>
                     <td class="px-8 py-5">
                         <span class="text-[9px] font-bold px-3 py-1 rounded-full ${a.Status === 'Completed' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}">${a.Status || 'Pending'}</span>
@@ -199,41 +197,41 @@
         function setTab(tab) {
             currentTab = tab;
             ['ALL', 'Pending', 'Completed'].forEach(t => {
-                const el = document.getElementById('tab'+t);
-                el.className = t === tab ? 'px-6 py-2 rounded-xl text-xs font-bold transition bg-white shadow-sm text-slate-900' : 'px-6 py-2 rounded-xl text-xs font-bold transition text-slate-500';
+                document.getElementById('tab'+t).className = t === tab ? 'px-6 py-2 rounded-xl text-xs font-bold transition bg-white shadow-sm text-slate-900' : 'px-6 py-2 rounded-xl text-xs font-bold transition text-slate-500';
             });
             render();
         }
 
         function openModal(name) {
-            const a = audits.find(item => item.Name === name); if (!a) return;
-            
+            const a = audits.find(item => item.Name === name); 
+            if (!a) return;
+
             document.getElementById('modalTitle').innerText = a.Name;
             document.getElementById('modalPartner').innerText = a.Partner;
             document.getElementById('modalTarget').innerText = a.Deadline ? `| Target: ${a.Deadline}` : "";
-            document.getElementById('modalDesc').innerText = a.Description || "Engagement documentation.";
+            document.getElementById('modalDesc').innerText = a.Description || "Firm documentation.";
             document.getElementById('modalStatusBadge').innerText = a.Status;
-            
-            // --- FIXED LINK MAPPING ---
-            // Using .trim() to prevent empty spaces from breaking links
-            const fLink = a.Folder ? a.Folder.trim() : "";
-            const rLink = a.Report ? a.Report.trim() : "";
-            const cLink = a.Checklist ? a.Checklist.trim() : "";
 
-            const folderBtn = document.getElementById('modalFolder');
-            folderBtn.href = fLink || "#";
-            folderBtn.style.opacity = fLink ? "1" : "0.5";
-            folderBtn.style.pointerEvents = fLink ? "auto" : "none";
+            // --- REINFORCED LINK INJECTION ---
+            const links = {
+                modalFolder: a.Folder ? a.Folder.trim() : "",
+                modalReport: a.Report ? a.Report.trim() : "",
+                modalChecklist: a.Checklist ? a.Checklist.trim() : ""
+            };
 
-            const reportBtn = document.getElementById('modalReport');
-            reportBtn.href = rLink || "#";
-            reportBtn.style.opacity = rLink ? "1" : "0.5";
-            reportBtn.style.pointerEvents = rLink ? "auto" : "none";
-
-            const checkBtn = document.getElementById('modalChecklist');
-            checkBtn.href = cLink || "#";
-            checkBtn.style.opacity = cLink ? "1" : "0.5";
-            checkBtn.style.pointerEvents = cLink ? "auto" : "none";
+            Object.entries(links).forEach(([id, url]) => {
+                const el = document.getElementById(id);
+                if (url && url.startsWith('http')) {
+                    el.setAttribute('href', url);
+                    el.setAttribute('target', '_blank');
+                    el.style.opacity = "1";
+                    el.style.pointerEvents = "auto";
+                } else {
+                    el.setAttribute('href', 'javascript:void(0)');
+                    el.style.opacity = "0.3";
+                    el.style.pointerEvents = "none";
+                }
+            });
 
             const team = a.Team ? a.Team.split(',') : [];
             document.getElementById('modalTeam').innerHTML = team.map(n => `
@@ -243,7 +241,6 @@
             document.getElementById('projectModal').classList.remove('hidden');
         }
 
-        function closeModal() { document.getElementById('projectModal').classList.add('hidden'); }
         window.onclick = (e) => { if(e.target == document.getElementById('projectModal')) closeModal(); }
         window.onload = loadData;
     </script>
