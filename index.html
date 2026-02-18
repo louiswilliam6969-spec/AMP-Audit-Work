@@ -47,7 +47,7 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
             <div class="md:col-span-3">
                 <h2 class="text-3xl font-bold mb-2">Audit Dashboard</h2>
-                <p class="text-slate-500">Partner Oversight: Punit Khandelwal & Apoorv Mathur.</p>
+                <p class="text-slate-500">Monitoring real-time firm engagements and compliance deadlines.</p>
             </div>
             
             <button onclick="toggleListView()" class="group relative overflow-hidden bg-blue-600 text-white p-6 rounded-3xl shadow-xl transition-all active:scale-95 text-left">
@@ -225,7 +225,7 @@
             document.getElementById('modalTeam').innerHTML = team.map(n => {
                 const name = n.trim();
                 return `
-                    <div class="h-10 w-10 rounded-full border-2 border-white bg-blue-600 text-white flex items-center justify-center font-bold text-xs shadow-sm hover:scale-110 transition cursor-help" 
+                    <div class="h-10 w-10 rounded-full border-2 border-white bg-blue-600 text-white flex items-center justify-center font-bold text-xs shadow-sm hover:scale-110 transition cursor-pointer" 
                          title="${name}">
                         ${name.charAt(0).toUpperCase()}
                     </div>`;
