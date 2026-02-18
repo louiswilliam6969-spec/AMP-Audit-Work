@@ -8,11 +8,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <style>
+        /* Restored previous modern font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
         .modern-card { background: white; border: 1px solid #e2e8f0; border-radius: 1.5rem; transition: all 0.3s ease; position: relative; overflow: hidden; }
         .modern-card:hover { border-color: #3b82f6; transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05); }
         .sidebar-accent { width: 5px; height: 100%; position: absolute; left: 0; top: 0; }
         .modal-blur { backdrop-filter: blur(8px); background-color: rgba(15, 23, 42, 0.8); }
+        /* Blur class for missing links */
+        .disabled-resource { opacity: 0.3; filter: blur(1px); pointer-events: none; cursor: not-allowed; }
         .hidden { display: none !important; }
     </style>
 </head>
@@ -21,7 +25,7 @@
     <nav class="bg-white border-b border-slate-200 py-4 px-8 sticky top-0 z-40">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <h1 class="text-xl font-bold tracking-tight uppercase">AMP <span class="text-blue-600">Audits</span></h1>
-            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">v7.0 Executive</p>
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">v7.5 Stable</p>
         </div>
     </nav>
 
@@ -80,7 +84,7 @@
     </div>
 
     <script>
-        const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRGzHkHY-7FP7s1cAC0BLRo3EENu8nHvUZxGbkBVeBAcaYlZGDWj_B8fjswfe6y3kcdBgo3h8IoeenL/pub?output=csv'; // MUST end in &output=csv
+        const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRGzHkHY-7FP7s1cAC0BLRo3EENu8nHvUZxGbkBVeBAcaYlZGDWj_B8fjswfe6y3kcdBgo3h8IoeenL/pub?output=csv';
         let audits = []; let currentTab = 'ALL';
 
         function loadData() { Papa.parse(sheetUrl, { download: true, header: true, skipEmptyLines: true, complete: function(results) { audits = results.data; render(); } }); }
@@ -117,9 +121,23 @@
             document.getElementById('modalPartner').innerText = a.Partner;
             document.getElementById('modalTarget').innerText = a.Deadline ? `DEADLINE: ${a.Deadline}` : "";
             document.getElementById('modalDesc').innerText = a.Description || "Firm documentation.";
-            document.getElementById('modalFolder').href = a.Folder || "#";
-            document.getElementById('modalReport').href = a.Report || "#";
-            document.getElementById('modalChecklist').href = a.Checklist || "#";
+
+            // Dynamic Blur Logic for Missing Links
+            const setupLink = (id, url) => {
+                const el = document.getElementById(id);
+                if (url && url.trim() !== "" && url !== "#") {
+                    el.href = url;
+                    el.classList.remove('disabled-resource');
+                } else {
+                    el.href = "javascript:void(0)";
+                    el.classList.add('disabled-resource');
+                }
+            };
+
+            setupLink('modalFolder', a.Folder);
+            setupLink('modalReport', a.Report);
+            setupLink('modalChecklist', a.Checklist);
+
             document.getElementById('modalTeam').innerHTML = (a.Team ? a.Team.split(',') : []).map(n => `<div class="h-10 w-10 rounded-full border-2 border-white bg-blue-600 text-white flex items-center justify-center font-bold text-xs shadow-sm">${n.trim().charAt(0).toUpperCase()}</div>`).join('');
             document.getElementById('projectModal').classList.remove('hidden');
         }
