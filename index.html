@@ -10,8 +10,10 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        
         .modern-card { background: white; border: 1px solid #e2e8f0; border-radius: 1.5rem; transition: all 0.3s ease; position: relative; overflow: hidden; }
         .modern-card:hover { border-color: #3b82f6; transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05); }
+        
         .sidebar-accent { width: 5px; height: 100%; position: absolute; left: 0; top: 0; }
         .modal-blur { backdrop-filter: blur(8px); background-color: rgba(15, 23, 42, 0.8); }
         
@@ -21,6 +23,7 @@
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
         }
         .pulse-overdue { animation: pulse-red 2s infinite; background-color: #ef4444 !important; color: white !important; }
+
         .disabled-resource { opacity: 0.3; filter: blur(1.5px); pointer-events: none; cursor: not-allowed; }
         .hidden-view { display: none !important; }
     </style>
@@ -33,7 +36,10 @@
                 <div class="bg-blue-600 p-2 rounded-xl text-white shadow-lg"><i class="fas fa-shield-halved text-xl"></i></div>
                 <h1 class="text-xl font-bold tracking-tight uppercase">AMP <span class="text-blue-600">Audits</span></h1>
             </div>
-            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">v9.6 Stable</p>
+            <div class="text-right">
+                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Portal Version v9.8</p>
+                <p id="lastUpdateText" class="text-[10px] text-slate-500 font-medium">Syncing...</p>
+            </div>
         </div>
     </nav>
 
@@ -41,15 +47,16 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
             <div class="md:col-span-3">
                 <h2 class="text-3xl font-bold mb-2 text-slate-800">Audit Dashboard</h2>
-                <p class="text-slate-500 italic">Monitoring real-time firm engagements and compliance deadlines.</p>
+                <p class="text-slate-500 italic">Real-time engagement tracking for Punit Khandelwal and Apoorv Mathur.</p>
             </div>
+            
             <button onclick="toggleListView()" class="group relative overflow-hidden bg-blue-600 text-white p-6 rounded-3xl shadow-xl transition-all active:scale-95 text-left">
                 <p id="counterLabel" class="text-[10px] uppercase font-bold text-blue-200 tracking-widest">Total Engagements</p>
                 <div class="flex justify-between items-center">
                     <p id="totalCount" class="text-4xl font-bold">0</p>
-                    <i class="fas fa-tasks opacity-30 text-4xl"></i>
+                    <i class="fas fa-list-check opacity-30 text-4xl"></i>
                 </div>
-                <p class="text-[9px] mt-2 text-white/70 font-bold uppercase tracking-widest">Click to view full list</p>
+                <p class="text-[9px] mt-2 text-white/70 font-bold uppercase tracking-widest">Click to view full tracker</p>
             </button>
         </div>
 
@@ -105,7 +112,7 @@
                     </div>
                     <div>
                         <h4 class="text-[10px] uppercase font-bold text-slate-400 mb-3 tracking-widest">Engagement Team</h4>
-                        <div id="modalTeam" class="flex gap-4"></div>
+                        <div id="modalTeam" class="flex -space-x-2"></div>
                     </div>
                 </div>
                 <div class="md:col-span-2">
@@ -120,7 +127,7 @@
                                 <span class="flex items-center gap-3"><i class="fas fa-tasks text-blue-400"></i><span class="font-bold text-xs text-slate-700">QC Checklist</span></span>
                                 <i class="fas fa-external-link-alt text-[10px] text-slate-300"></i>
                             </a>
-                            <a id="modalReport" href="#" target="_blank" class="flex items-center justify-between p-4 bg-white rounded-2xl border border-slate-200 hover:border-green-500 transition shadow-sm group text-slate-700">
+                            <a id="modalReport" href="#" target="_blank" class="flex items-center justify-between p-4 bg-white rounded-2xl border border-slate-200 hover:border-green-500 transition shadow-sm group">
                                 <span class="flex items-center gap-3"><i class="fas fa-file-invoice text-green-500"></i><span class="font-bold text-xs text-slate-700">Final Audit Report</span></span>
                                 <i class="fas fa-external-link-alt text-[10px] text-slate-300"></i>
                             </a>
@@ -132,11 +139,20 @@
     </div>
 
     <script>
-        const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRGzHkHY-7FP7s1cAC0BLRo3EENu8nHvUZxGbkBVeBAcaYlZGDWj_B8fjswfe6y3kcdBgo3h8IoeenL/pub?output=csv'; 
+        const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRGzHkHY-7FP7s1cAC0BLRo3EENu8nHvUZxGbkBVeBAcaYlZGDWj_B8fjswfe6y3kcdBgo3h8IoeenL/pub?output=csv'; // Replace with CSV link
         let audits = []; let currentTab = 'ALL';
 
         function loadData() {
-            Papa.parse(sheetUrl, { download: true, header: true, skipEmptyLines: true, complete: function(results) { audits = results.data; render(); } });
+            Papa.parse(sheetUrl, { 
+                download: true, header: true, skipEmptyLines: true,
+                complete: function(results) { 
+                    audits = results.data; 
+                    // Update Last Sync Time
+                    const now = new Date();
+                    document.getElementById('lastUpdateText').innerText = "Last Updated: " + now.toLocaleTimeString();
+                    render(); 
+                } 
+            });
         }
 
         function toggleListView() { document.getElementById('listViewPanel').classList.toggle('hidden-view'); }
@@ -155,12 +171,13 @@
             const search = document.getElementById('auditSearch').value.toLowerCase();
             const filtered = audits.filter(a => (currentTab === 'ALL' || a.Status === currentTab) && (a.Name?.toLowerCase().includes(search) || a.Partner?.toLowerCase().includes(search)));
             
+            // Dynamic Count Fix
             document.getElementById('totalCount').innerText = filtered.length;
             document.getElementById('counterLabel').innerText = currentTab === 'ALL' ? 'Total Engagements' : `${currentTab} Engagements`;
 
             tableBody.innerHTML = filtered.map(a => `
                 <tr class="hover:bg-slate-50 transition border-b border-slate-100 text-slate-700">
-                    <td class="px-10 py-6 font-bold uppercase tracking-tight">${a.Name || 'N/A'}</td>
+                    <td class="px-10 py-6 font-bold uppercase tracking-tight italic">${a.Name || 'N/A'}</td>
                     <td class="px-10 py-6 text-slate-500 text-xs">${a.Partner || 'N/A'}</td>
                     <td class="px-10 py-6 text-center text-[10px] text-slate-400 uppercase tracking-tighter">${a.Date || 'N/A'}</td>
                     <td class="px-10 py-6 text-center">
@@ -175,7 +192,7 @@
                 const badgeColor = a.Status === 'Completed' ? 'bg-green-100 text-green-700' : (a.Status === 'Ongoing' ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700');
                 
                 return `
-                <div onclick="openModal('${(a.Name || "").replace(/'/g, "\\'")}')" class="modern-card p-10 cursor-pointer group shadow-sm">
+                <div onclick="openModal('${(a.Name || "").replace(/'/g, "\\'")}')" class="modern-card p-10 cursor-pointer group shadow-sm border border-slate-200">
                     <div class="sidebar-accent ${colorClass}"></div>
                     <div class="flex justify-between items-start">
                         <div class="flex-1">
@@ -195,7 +212,8 @@
         function setTab(tab) {
             currentTab = tab;
             ['ALL', 'Pending', 'Ongoing', 'Completed'].forEach(t => {
-                document.getElementById('tab'+t).className = t === tab ? 'px-6 py-2 rounded-xl text-xs font-bold transition bg-white shadow-sm text-slate-900' : 'px-6 py-2 rounded-xl text-xs font-bold transition text-slate-500 hover:text-slate-700';
+                const el = document.getElementById('tab'+t);
+                el.className = t === tab ? 'px-6 py-2 rounded-xl text-xs font-bold transition bg-white shadow-sm text-slate-900' : 'px-6 py-2 rounded-xl text-xs font-bold transition text-slate-500 hover:text-slate-700';
             });
             render();
         }
@@ -205,7 +223,7 @@
             document.getElementById('modalTitle').innerText = a.Name;
             document.getElementById('modalPartner').innerText = a.Partner;
             document.getElementById('modalTarget').innerText = a.Deadline ? `| TARGET: ${a.Deadline}` : "";
-            document.getElementById('modalDesc').innerText = a.Description || "Engagement quality control and working papers.";
+            document.getElementById('modalDesc').innerText = a.Description || "Firm documentation.";
             document.getElementById('modalStatusBadge').innerText = a.Status;
 
             const applyLink = (id, url) => {
@@ -222,11 +240,9 @@
             document.getElementById('modalTeam').innerHTML = team.map(n => {
                 const name = n.trim();
                 return `
-                    <div class="flex flex-col items-center">
-                        <div class="h-10 w-10 rounded-full border-2 border-white bg-blue-600 text-white flex items-center justify-center font-bold text-xs shadow-sm hover:scale-110 transition cursor-default mb-1">
-                            ${name.charAt(0).toUpperCase()}
-                        </div>
-                        <p class="text-[9px] font-bold text-slate-500 uppercase tracking-tighter text-center w-12 truncate">${name}</p>
+                    <div class="h-10 w-10 rounded-full border-2 border-white bg-blue-600 text-white flex items-center justify-center font-bold text-xs shadow-sm hover:scale-110 transition cursor-help" 
+                         title="${name}">
+                        ${name.charAt(0).toUpperCase()}
                     </div>`;
             }).join('');
             document.getElementById('projectModal').classList.remove('hidden-view');
